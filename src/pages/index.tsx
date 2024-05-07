@@ -52,18 +52,36 @@ const Home = () => {
   // 9 -> 石+はてな
   // 10 -> 石+旗
   // 11 -> ボムセル
-  const board: number[][] = [];
-  console.log(samplePos);
 
-  for (let y = 0; y < 9; y++){
-    for (let x = 0; x < 9; x++){
+  // const board: number[][] = [];
 
-    }
+  const board = useState([
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
+  console.log(board);
+  const clickHandler = (x: number, y: number) => {};
+
+  for (let y = 0; y < 9; y++) {
+    for (let x = 0; x < 9; x++) {}
   }
 
   return (
     <div className={styles.container}>
-      <div className={styles.boardStyle}></div>
+      {/* <div className={styles.sampleStyle}> */}
+      <div className={styles.boardStyle}>
+        {board.map((row, y) => (
+          <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)} />
+        ))}
+      </div>
+      {/* </div> */}
       {/* <div
         className={styles.sampleStyle}
         style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}

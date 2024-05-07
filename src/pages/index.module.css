@@ -8,12 +8,27 @@
   padding: 0 0.5rem;
 }
 
-.sampleStyle{
+.sampleStyle {
   width: 30px;
   height: 30px;
   background: url(../assets/images/icons.png) no-repeat;
 }
 
-.boardStyle{
-  
+.boardStyle {
+  display: flex;
+  flex-wrap: wrap;
+  width: 270px;
+  height: 270px;
+  background-color: gray;
+}
+
+.tileStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  touch-action: manipulation;
+  background-color: darkgray;
+  border: solid 1px gray;
 }
