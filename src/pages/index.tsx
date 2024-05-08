@@ -36,7 +36,7 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,29 +53,51 @@ const Home = () => {
   // 10 -> 石+旗
   // 11 -> ボムセル
 
-const board: number[][] = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-];
+  const board: number[][] = [
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+  ];
 
   console.log(board);
-  const clickHandler = (x: number, y: number) => {};
+  const clickHandler = (x: number, y: number) => {
+    newBoard = structuredClone(userInputs)
+// ユーザーインプットをクリック
+// 0 -> 未クリック
+// 1 -> 左クリック
+// 2 -> はてな
+// 3 -> 旗
+for (let y = 0; y < 9; y++) {
+  for (let x = 0; x < 9; x++) {}
+}
+// 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
+// なかった場合：-1
+// １つの場合：samplePos
+// １つ以上の場合：samplePos + n
+  };
 
-  // for (let y = 0; y < 9; y++) {
-  //   for (let x = 0; x < 9; x++) {}
-  // }
 
   return (
     <div className={styles.container}>
       <div className={styles.boardStyle}>
-        {board.map((row, y) => row.map((color, x) => <div className={styles.tileStyle} />))}
+        {board.map((row, y) =>
+          row.map((number, x) => (
+            <div className={styles.tileStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
+              {number !== -1 && (
+                <div
+                  className={styles.sampleStyle}
+                  // style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}
+                />
+              )}
+            </div>
+          )),
+        )}
       </div>
     </div>
   );

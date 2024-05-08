@@ -28,7 +28,6 @@
   justify-content: center;
   width: 30px;
   height: 30px;
-  touch-action: manipulation;
   background-color: darkgray;
   border: solid 1px gray;
 }
