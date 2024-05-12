@@ -67,21 +67,26 @@ const Home = () => {
 
   console.log(board);
   const clickHandler = (x: number, y: number) => {
-    newBoard = structuredClone(userInputs)
-// ユーザーインプットをクリック
-// 0 -> 未クリック
-// 1 -> 左クリック
-// 2 -> はてな
-// 3 -> 旗
-for (let y = 0; y < 9; y++) {
-  for (let x = 0; x < 9; x++) {}
-}
-// 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
-// なかった場合：-1
-// １つの場合：samplePos
-// １つ以上の場合：samplePos + n
-  };
+    newBoard = structuredClone(board);
+    // ユーザーインプットをクリック
+    // 0 -> 未クリック
+    // 1 -> 左クリック
+    // 2 -> はてな
+    // 3 -> 旗
+    if (board[y][x] === -1){
+      for (const direction of directions) {
+        
+      }
+    }for (let y = 0; y < 9; y++) {
+      for (let x = 0; x < 9; x++) {
 
+      }
+    }
+    // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
+    // なかった場合：-1
+    // １つの場合：samplePos
+    // １つ以上の場合：samplePos + n
+  };
 
   return (
     <div className={styles.container}>
@@ -92,7 +97,7 @@ for (let y = 0; y < 9; y++) {
               {number !== -1 && (
                 <div
                   className={styles.sampleStyle}
-                  // style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}
+                  style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}
                 />
               )}
             </div>
