@@ -73,14 +73,12 @@ const Home = () => {
     // 1 -> 左クリック
     // 2 -> はてな
     // 3 -> 旗
-    if (board[y][x] === -1){
+    if (board[y][x] === -1) {
       for (const direction of directions) {
-        
       }
-    }for (let y = 0; y < 9; y++) {
-      for (let x = 0; x < 9; x++) {
-
-      }
+    }
+    for (let y = 0; y < 9; y++) {
+      for (let x = 0; x < 9; x++) {}
     }
     // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
     // なかった場合：-1
@@ -90,19 +88,28 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.boardStyle}>
-        {board.map((row, y) =>
-          row.map((number, x) => (
-            <div className={styles.tileStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
-              {number !== -1 && (
+      <div className={styles.board}>
+        <div className={styles.topboard} />
+        <div className={styles.bottomboard}>
+          <div className={styles.boardStyle}>
+            {board.map((row, y) =>
+              row.map((number, x) => (
                 <div
-                  className={styles.sampleStyle}
-                  style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}
-                />
-              )}
-            </div>
-          )),
-        )}
+                  className={styles.tileStyle}
+                  key={`${x}-${y}`}
+                  onClick={() => clickHandler(x, y)}
+                >
+                  {number !== -1 && (
+                    <div
+                      className={styles.sampleStyle}
+                      style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}
+                    />
+                  )}
+                </div>
+              )),
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
