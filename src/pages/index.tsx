@@ -30,7 +30,6 @@ const Home = () => {
   const bombConst = 10;
   // 0 -> ボム無し
   // 1 -> ボム有り
-  const [samplePos, setSamplePos] = useState(0);
   const [bombMap, setBombMap] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -54,7 +53,7 @@ const Home = () => {
   // 11 -> ボムセル
 
   const board: number[][] = [
-    [-1, 0, 1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -65,30 +64,66 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
 
-  console.log(board);
-  const clickHandler = (x: number, y: number) => {
-    const newBoard = structuredClone(board);
-    if (newBoard[y][x] === -1){
+  // console.log(board);
 
+  const clickHandler = (x: number, y: number) => {
+    const newuserInputs = structuredClone(userInputs);
+    const newbombMap = structuredClone(bombMap);
+    if (board[y][x] === -1) {
+      while (newbombMap.flat().filter((number) => number === 1).length < 10) {
+        const Y = Math.floor(Math.random() * 9);
+        const X = Math.floor(Math.random() * 9);
+        if (Y === y && X === x) {
+          return;
+        }
+        newbombMap[Y][X] = 1;
+        console.log(X, Y);
+      }
+      setBombMap(newbombMap);
     }
+    // // 左クリックをした
+    // if (userInputs[y][x] === 0) {
+    //   newuserInputs[y][x] = 1;
+    //   setUserInputs(newuserInputs);
+    // }
+    // // まわりのbombの数を確認する
+    // if (userInputs[y][x] === 1) {
+    //   for (const direction of directions) {
+    //     // bombがあったら終了
+    //     if (bombMap[y][x] === 1) {
+    //       break;
+    //       // まわりにbombがあったら+1
+    //     } else if (bombMap[y + direction[0]][x + direction[1]] === 1) {
+    //       board[y + direction[0]][x + direction[1]] += 1;
+    //     }
+    //   }
+    // }
+
+    // ↓メモ
     // ユーザーインプットをクリック
     // 0 -> 未クリック
     // 1 -> 左クリック
     // 2 -> はてな
     // 3 -> 旗
-    if (board[y][x] === -1) {
-      for (const direction of directions) {
-      }
-    }
-    for (let y = 0; y < 9; y++) {
-      for (let x = 0; x < 9; x++) {}
-    }
+    // if (board[y][x] === -1) {
+    // for (const direction of directions) {
+    // }
+    // }
+    // for (let y = 0; y < 9; y++) {
+    //   for (let x = 0; x < 9; x++) {}
+    // }
     // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
     // なかった場合：-1
     // １つの場合：samplePos
     // １つ以上の場合：samplePos + n
   };
-
+  for (let a = 0; a < 9; a++) {
+    for (let b = 0; b < 9; b++) {
+      if (bombMap[a][b] === 1) {
+        board[a][b] = 10;
+      }
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.board}>
