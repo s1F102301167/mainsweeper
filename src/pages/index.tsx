@@ -86,18 +86,6 @@ const Home = () => {
     //   newuserInputs[y][x] = 1;
     //   setUserInputs(newuserInputs);
     // }
-    // // まわりのbombの数を確認する
-    // if (userInputs[y][x] === 1) {
-    //   for (const direction of directions) {
-    //     // bombがあったら終了
-    //     if (bombMap[y][x] === 1) {
-    //       break;
-    //       // まわりにbombがあったら+1
-    //     } else if (bombMap[y + direction[0]][x + direction[1]] === 1) {
-    //       board[y + direction[0]][x + direction[1]] += 1;
-    //     }
-    //   }
-    // }
 
     // ↓メモ
     // ユーザーインプットをクリック
@@ -119,11 +107,25 @@ const Home = () => {
   };
   for (let a = 0; a < 9; a++) {
     for (let b = 0; b < 9; b++) {
-      if (bombMap[a][b] === 1) {
-        board[a][b] = 10;
+      for (const direction of directions) {
+        if (
+          a + direction[0] < 0 ||
+          a + direction[0] >= 9 ||
+          b + direction[1] < 0 ||
+          b + direction[1] >= 9
+        ) {
+          continue;
+        }
+        if (bombMap[a][b] === 1) {
+          board[a][b] = 10;
+          if (bombMap[a + direction[0]][b + direction[1]] !== 1) {
+            board[a + direction[0]][b + direction[1]] += 1;
+          }
+        }
       }
     }
   }
+  console.table(bombMap);
   return (
     <div className={styles.container}>
       <div className={styles.board}>
