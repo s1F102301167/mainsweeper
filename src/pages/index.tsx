@@ -136,6 +136,7 @@ const Home = () => {
               row.map((number, x) => (
                 <div
                   className={styles.tileStyle}
+                  style={{ border: [number === -1 ? undefined : `none`] }}
                   key={`${x}-${y}`}
                   onClick={() => clickHandler(x, y)}
                 >
