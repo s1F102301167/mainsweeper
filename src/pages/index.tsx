@@ -4,8 +4,8 @@ import styles from './index.module.css';
 const Home = () => {
   // 0 -> 未クリック
   // 1 -> 左クリック
-  // 2 -> はてな
-  // 3 -> 旗
+  // 2 -> はてな(右クリック２回)
+  // 3 -> 旗(右クリック１回)
   const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,7 +36,7 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -54,7 +54,7 @@ const Home = () => {
   // 11 -> ボムセル
 
   const board: number[][] = [
-    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, 0, 1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -67,7 +67,10 @@ const Home = () => {
 
   console.log(board);
   const clickHandler = (x: number, y: number) => {
-    newBoard = structuredClone(board);
+    const newBoard = structuredClone(board);
+    if (newBoard[y][x] === -1){
+
+    }
     // ユーザーインプットをクリック
     // 0 -> 未クリック
     // 1 -> 左クリック
@@ -102,7 +105,7 @@ const Home = () => {
                   {number !== -1 && (
                     <div
                       className={styles.sampleStyle}
-                      style={{ backgroundPosition: `${-30 * samplePos}px 0px` }}
+                      style={{ backgroundPosition: `${-30 * number}px 0px` }}
                     />
                   )}
                 </div>
