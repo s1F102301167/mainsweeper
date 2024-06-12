@@ -65,10 +65,9 @@ const Home = () => {
   ];
 
   // console.log(board);
-
+  const newuserInputs = structuredClone(userInputs);
+  const newbombMap = structuredClone(bombMap);
   const clickHandler = (x: number, y: number) => {
-    const newuserInputs = structuredClone(userInputs);
-    const newbombMap = structuredClone(bombMap);
     if (board[y][x] === -1) {
       while (newbombMap.flat().filter((number) => number === 1).length < 10) {
         const Y = Math.floor(Math.random() * 9);
@@ -81,30 +80,31 @@ const Home = () => {
       }
       setBombMap(newbombMap);
     }
-    // // 左クリックをした
-    // if (userInputs[y][x] === 0) {
-    //   newuserInputs[y][x] = 1;
-    //   setUserInputs(newuserInputs);
-    // }
-
-    // ↓メモ
-    // ユーザーインプットをクリック
-    // 0 -> 未クリック
-    // 1 -> 左クリック
-    // 2 -> はてな
-    // 3 -> 旗
-    // if (board[y][x] === -1) {
-    // for (const direction of directions) {
-    // }
-    // }
-    // for (let y = 0; y < 9; y++) {
-    //   for (let x = 0; x < 9; x++) {}
-    // }
-    // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
-    // なかった場合：-1
-    // １つの場合：samplePos
-    // １つ以上の場合：samplePos + n
+    // 左クリックをした
+    if (userInputs[y][x] === 0) {
+      newuserInputs[y][x] = 1;
+      setUserInputs(newuserInputs);
+    }
   };
+  // ↓メモ
+  // ユーザーインプットをクリック
+  // 0 -> 未クリック
+  // 1 -> 左クリック
+  // 2 -> はてな
+  // 3 -> 旗
+  // if (board[y][x] === -1) {
+  // for (const direction of directions) {
+  // }
+  // }
+  // for (let y = 0; y < 9; y++) {
+  //   for (let x = 0; x < 9; x++) {}
+  // }
+  // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
+  // なかった場合：-1
+  // １つの場合：samplePos
+  // １つ以上の場合：samplePos + n
+
+  // ボードに表示させるコード
   for (let a = 0; a < 9; a++) {
     for (let b = 0; b < 9; b++) {
       for (const direction of directions) {
@@ -125,7 +125,10 @@ const Home = () => {
       }
     }
   }
+  // 空白連鎖
+
   console.table(bombMap);
+  console.table(newuserInputs);
   return (
     <div className={styles.container}>
       <div className={styles.board}>
