@@ -208,7 +208,16 @@ const Home = () => {
                     <div
                       className={styles.sampleStyle}
                       style={{ backgroundPosition: `${-30 * (number - 1)}px 0px` }}
-                    />
+                    >
+                      {/* <div>
+                        className={styles.sampleStyle}
+                        style=
+                        {{
+                          backgroundPosition:
+                            number === 9 || number === 10 ? border: (number === -1) : `none`,
+                        }}
+                      </div> */}
+                    </div>
                   )}
                 </div>
               )),
