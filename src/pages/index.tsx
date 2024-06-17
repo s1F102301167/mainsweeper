@@ -67,7 +67,27 @@ const Home = () => {
   // console.log(board);
   const newuserInputs = structuredClone(userInputs);
   const newbombMap = structuredClone(bombMap);
+  // 右クリック
+  const clickR = (x: number, y: number) => {
+    document.getElementsByTagName('html')[0].oncontextmenu = () => false;
+    if (userInputs[y][x] === 0) {
+      newuserInputs[y][x] = 2;
+      setUserInputs(newuserInputs);
+    }
+    if (userInputs[y][x] === 2) {
+      newuserInputs[y][x] = 3;
+      setUserInputs(newuserInputs);
+    }
+    if (userInputs[y][x] === 3) {
+      newuserInputs[y][x] = 2;
+      setUserInputs(newuserInputs);
+    }
+  };
   const clickHandler = (x: number, y: number) => {
+    if (userInputs[y][x] === 0) {
+      newuserInputs[y][x] = 1;
+      setUserInputs(newuserInputs);
+    }
     if (board[y][x] === -1) {
       while (newbombMap.flat().filter((number) => number === 1).length < 10) {
         const Y = Math.floor(Math.random() * 9);
@@ -80,30 +100,7 @@ const Home = () => {
       }
       setBombMap(newbombMap);
     }
-    // 左クリックをした
-    if (userInputs[y][x] === 0) {
-      newuserInputs[y][x] = 1;
-      setUserInputs(newuserInputs);
-    }
   };
-  // ↓メモ
-  // ユーザーインプットをクリック
-  // 0 -> 未クリック
-  // 1 -> 左クリック
-  // 2 -> はてな
-  // 3 -> 旗
-  // if (board[y][x] === -1) {
-  // for (const direction of directions) {
-  // }
-  // }
-  // for (let y = 0; y < 9; y++) {
-  //   for (let x = 0; x < 9; x++) {}
-  // }
-  // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
-  // なかった場合：-1
-  // １つの場合：samplePos
-  // １つ以上の場合：samplePos + n
-
   // ボードに表示させるコード
   for (let a = 0; a < 9; a++) {
     for (let b = 0; b < 9; b++) {
@@ -122,13 +119,36 @@ const Home = () => {
             board[a + direction[0]][b + direction[1]] += 1;
           }
         }
+        if (newuserInputs[a][b] === 1) {
+          board[a][b] = -2;
+        }
       }
     }
   }
-  // 空白連鎖
-
+  // // 空白連鎖
+  // if (newuserInputs[y][x] === 0) {
+  //   board[y][x] = -1;
+  // }
+  // ↓メモ
+  // ユーザーインプットをクリック
+  // 0 -> 未クリック
+  // 1 -> 左クリック
+  // 2 -> はてな
+  // 3 -> 旗
+  // if (board[y][x] === -1) {
+  // for (const direction of directions) {
+  // }
+  // }
+  // for (let y = 0; y < 9; y++) {
+  //   for (let x = 0; x < 9; x++) {}
+  // }
+  // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
+  // なかった場合：-1
+  // １つの場合：samplePos
+  // １つ以上の場合：samplePos + n
   console.table(bombMap);
   console.table(newuserInputs);
+  console.table(board);
   return (
     <div className={styles.container}>
       <div className={styles.board}>
@@ -142,6 +162,7 @@ const Home = () => {
                   style={{ border: [number === -1 ? undefined : `none`] }}
                   key={`${x}-${y}`}
                   onClick={() => clickHandler(x, y)}
+                  onContextMenu={() => clickR(x, y)}
                 >
                   {number !== -1 && (
                     <div
