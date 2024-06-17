@@ -192,32 +192,30 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.board}>
-        <div className={styles.topboard} />
+        <div className={styles.topboard}>
+          <div className={styles.topleft} />
+          <div className={styles.topcenter} />
+          <div className={styles.topright} />
+        </div>
         <div className={styles.bottomboard}>
           <div className={styles.boardStyle}>
             {board.map((row, y) =>
               row.map((number, x) => (
                 <div
                   className={styles.tileStyle}
-                  style={{ border: [number === -1 ? undefined : `none`] }}
+                  style={{ border: number === -1 ? undefined : 'none' }}
                   key={`${x}-${y}`}
                   onClick={() => clickHandler(x, y)}
                   onContextMenu={() => clickR(x, y)}
                 >
+                  {/* {number === 9 ? } */}
                   {number !== -1 && (
                     <div
                       className={styles.sampleStyle}
-                      style={{ backgroundPosition: `${-30 * (number - 1)}px 0px` }}
-                    >
-                      {/* <div>
-                        className={styles.sampleStyle}
-                        style=
-                        {{
-                          backgroundPosition:
-                            number === 9 || number === 10 ? border: (number === -1) : `none`,
-                        }}
-                      </div> */}
-                    </div>
+                      style={
+                        number < 9 ? { backgroundPosition: `${-30 * (number - 1)}px 0px` } : {}
+                      }
+                    />
                   )}
                 </div>
               )),

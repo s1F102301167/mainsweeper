@@ -27,9 +27,34 @@
 
 .topboard {
   display: flex;
+  align-items: center;
+  justify-content: space-around;
   width: 333px;
-  height: 70px;
+  height: 80px;
   border: inset 8px #eee;
+}
+
+.topleft {
+  display: flex;
+  width: 90px;
+  height: 50px;
+  background-color: black;
+  border: inset 5px #eee;
+}
+
+.topcenter {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  border: outset 6px #eee;
+}
+
+.topright {
+  display: flex;
+  width: 90px;
+  height: 50px;
+  background-color: black;
+  border: inset 5px #eee;
 }
 
 .bottomboard {
