@@ -52,6 +52,18 @@ const Home = () => {
   // 10 -> 石+旗
   // 11 -> ボムセル
 
+  const bombcountboard: number[][] = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
   const board: number[][] = [
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -84,11 +96,7 @@ const Home = () => {
     }
   };
   const clickHandler = (x: number, y: number) => {
-    if (userInputs[y][x] === 0) {
-      newuserInputs[y][x] = 1;
-      setUserInputs(newuserInputs);
-    }
-    if (board[y][x] === -1) {
+    if (bombcountboard[y][x] === 0 && userInputs[y][x] === 0) {
       while (newbombMap.flat().filter((number) => number === 1).length < 10) {
         const Y = Math.floor(Math.random() * 9);
         const X = Math.floor(Math.random() * 9);
@@ -96,9 +104,12 @@ const Home = () => {
           return;
         }
         newbombMap[Y][X] = 1;
-        console.log(X, Y);
       }
       setBombMap(newbombMap);
+    }
+    if (userInputs[y][x] === 0) {
+      newuserInputs[y][x] = 1;
+      setUserInputs(newuserInputs);
     }
   };
   // ボードに表示させるコード
@@ -114,21 +125,47 @@ const Home = () => {
           continue;
         }
         if (bombMap[a][b] === 1) {
-          board[a][b] = 10;
+          bombcountboard[a][b] = 11;
           if (bombMap[a + direction[0]][b + direction[1]] !== 1) {
-            board[a + direction[0]][b + direction[1]] += 1;
+            bombcountboard[a + direction[0]][b + direction[1]] += 1;
           }
         }
-        if (newuserInputs[a][b] === 1) {
-          board[a][b] = -2;
-        }
+        // if (newuserInputs[a][b] === 1) {
+        //   board[a][b] = -2;
+        // }
+        // if (bombcountboard[a][b] !== 0) {
+        //   newuserInputs[a][b] = 1;
+        //   // setUserInputs(newuserInputs);
+        // }
       }
     }
   }
-  // // 空白連鎖
-  // if (newuserInputs[y][x] === 0) {
-  //   board[y][x] = -1;
-  // }
+  // 空白連鎖
+  const opencell = (x: number, y: number) => {
+    board[y][x] = bombcountboard[y][x];
+    if (bombcountboard[y][x] === 0) {
+      for (const direction of directions) {
+        if (
+          y + direction[0] < 0 ||
+          y + direction[0] >= 9 ||
+          x + direction[1] < 0 ||
+          x + direction[1] >= 9
+        ) {
+          continue;
+        }
+        if (board[y + direction[0]][x + direction[1]] === -1) {
+          opencell(x + direction[1], y + direction[0]);
+        }
+      }
+    }
+  };
+  for (let a = 0; a < 9; a++) {
+    for (let b = 0; b < 9; b++) {
+      if (newuserInputs[a][b] === 1) {
+        opencell(b, a);
+      }
+    }
+  }
   // ↓メモ
   // ユーザーインプットをクリック
   // 0 -> 未クリック
@@ -146,9 +183,12 @@ const Home = () => {
   // なかった場合：-1
   // １つの場合：samplePos
   // １つ以上の場合：samplePos + n
-  console.table(bombMap);
-  console.table(newuserInputs);
+
+  // console.table(bombMap);
+  // console.table(newuserInputs);
+  // console.table(bombcountboard);
   console.table(board);
+
   return (
     <div className={styles.container}>
       <div className={styles.board}>
@@ -167,7 +207,7 @@ const Home = () => {
                   {number !== -1 && (
                     <div
                       className={styles.sampleStyle}
-                      style={{ backgroundPosition: `${-30 * number}px 0px` }}
+                      style={{ backgroundPosition: `${-30 * (number - 1)}px 0px` }}
                     />
                   )}
                 </div>
