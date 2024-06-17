@@ -91,7 +91,7 @@ const Home = () => {
       setUserInputs(newuserInputs);
     }
     if (userInputs[y][x] === 3) {
-      newuserInputs[y][x] = 2;
+      newuserInputs[y][x] = 0;
       setUserInputs(newuserInputs);
     }
   };
@@ -112,6 +112,7 @@ const Home = () => {
       setUserInputs(newuserInputs);
     }
   };
+
   // ボードに表示させるコード
   for (let a = 0; a < 9; a++) {
     for (let b = 0; b < 9; b++) {
@@ -130,13 +131,12 @@ const Home = () => {
             bombcountboard[a + direction[0]][b + direction[1]] += 1;
           }
         }
-        // if (newuserInputs[a][b] === 1) {
-        //   board[a][b] = -2;
-        // }
-        // if (bombcountboard[a][b] !== 0) {
-        //   newuserInputs[a][b] = 1;
-        //   // setUserInputs(newuserInputs);
-        // }
+        if (newuserInputs[a][b] === 2) {
+          board[a][b] = 9;
+        }
+        if (newuserInputs[a][b] === 3) {
+          board[a][b] = 10;
+        }
       }
     }
   }
@@ -185,7 +185,7 @@ const Home = () => {
   // １つ以上の場合：samplePos + n
 
   // console.table(bombMap);
-  // console.table(newuserInputs);
+  console.table(newuserInputs);
   // console.table(bombcountboard);
   console.table(board);
 
