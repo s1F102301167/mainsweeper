@@ -203,18 +203,22 @@ const Home = () => {
               row.map((number, x) => (
                 <div
                   className={styles.tileStyle}
-                  style={{ border: number === -1 ? undefined : 'none' }}
+                  style={{
+                    border:
+                      number === -1
+                        ? undefined
+                        : number === 9 || number === 10
+                          ? undefined
+                          : 'none',
+                  }}
                   key={`${x}-${y}`}
                   onClick={() => clickHandler(x, y)}
                   onContextMenu={() => clickR(x, y)}
                 >
-                  {/* {number === 9 ? } */}
                   {number !== -1 && (
                     <div
                       className={styles.sampleStyle}
-                      style={
-                        number < 9 ? { backgroundPosition: `${-30 * (number - 1)}px 0px` } : {}
-                      }
+                      style={{ backgroundPosition: `${-30 * (number - 1)}px 0px` }}
                     />
                   )}
                 </div>
