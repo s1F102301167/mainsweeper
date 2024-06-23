@@ -112,6 +112,10 @@ const Home = () => {
       setUserInputs(newuserInputs);
     }
   };
+  // topboardに動きをつける
+  // const clicktopboard = (z: number) => {
+  //   if (board[z])
+  // }
 
   // ボードに表示させるコード
   for (let a = 0; a < 9; a++) {
@@ -194,7 +198,11 @@ const Home = () => {
       <div className={styles.board}>
         <div className={styles.topboard}>
           <div className={styles.topleft} />
-          <div className={styles.topcenter} />
+          <div
+            className={styles.topcenter}
+            onClick={() => clicktopboard(z)}
+            style={{ backgroundPosition: `${-30 * 13 - 2}px 1px` }}
+          />
           <div className={styles.topright} />
         </div>
         <div className={styles.bottomboard}>
