@@ -170,6 +170,17 @@ const Home = () => {
       }
     }
   }
+  // //にこにこクリック->すべてのボードが初期値に戻る
+  // const clicksmile = (x: number,y: number) => {
+  //   if
+  // }
+
+// // 爆弾クリック->マスをクリックしても何も動かない&topcenterをばってんニコちゃん
+// const isEnd = (x: number, y: number) => {
+
+// }
+
+// クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
   // ↓メモ
   // ユーザーインプットをクリック
   // 0 -> 未クリック
@@ -200,7 +211,7 @@ const Home = () => {
           <div className={styles.topleft} />
           <div
             className={styles.topcenter}
-            onClick={() => clicktopboard(z)}
+            onClick={() => clicksmile()}
             style={{ backgroundPosition: `${-30 * 13 - 2}px 1px` }}
           />
           <div className={styles.topright} />
