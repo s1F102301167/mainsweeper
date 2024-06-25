@@ -41,10 +41,12 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+
   const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => input === 1 && bombMap[y][x] === 1),
   );
+
   // -1 -> 石
   // 0 -> 画像無しセル
   // 1~8 -> 数字セル
@@ -170,17 +172,32 @@ const Home = () => {
       }
     }
   }
-  // //にこにこクリック->すべてのボードが初期値に戻る
-  // const clicksmile = (x: number,y: number) => {
+  //にこにこクリック->すべてのボードが初期値に戻る
+  const clicksmile = () => {
+    setUserInputs((Inputs) => Inputs.map((row) => row.map(() => 0)));
+    setBombMap((Bomb) => Bomb.map((row) => row.map(() => 0)));
+  };
+
+  // 爆弾クリック->マスをクリックしても何も動かない&topcenterをばってんニコちゃん
+  // const isEnd = (x: number, y: number) => {
   //   if
   // }
 
-// // 爆弾クリック->マスをクリックしても何も動かない&topcenterをばってんニコちゃん
-// const isEnd = (x: number, y: number) => {
+  // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
+  // const isClear = (x: number, y: number) => {
+  //   if
+  // };
 
-// }
+  // ボムの数引く旗の数(boardが10の数(旗))
+  const FlagCount = board.flat().filter((number) => number === 10).length;
+  const score = bombConst - FlagCount;
+  const flagbombscore = score.toString().padStart(3, '0');
 
-// クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
+  // // boardrightにタイマーbombmapに0以外がセットされたときにスタートし、isEndがTrueのときに止まる
+  // const timer = () => {
+  //   isPlayingがTrueのときにスタート
+  // }
+
   // ↓メモ
   // ユーザーインプットをクリック
   // 0 -> 未クリック
@@ -199,7 +216,7 @@ const Home = () => {
   // １つの場合：samplePos
   // １つ以上の場合：samplePos + n
 
-  // console.table(bombMap);
+  console.table(bombMap);
   console.table(newuserInputs);
   // console.table(bombcountboard);
   console.table(board);
@@ -208,13 +225,14 @@ const Home = () => {
     <div className={styles.container}>
       <div className={styles.board}>
         <div className={styles.topboard}>
-          <div className={styles.topleft} />
+          <div className={styles.topleft}>{flagbombscore}</div>
           <div
             className={styles.topcenter}
             onClick={() => clicksmile()}
             style={{ backgroundPosition: `${-30 * 13 - 2}px 1px` }}
+            // backgroundPositionの後ろにisEnd ? `${-30 * 15 - 10}px 1px` : isClear ? `${-30 * 14 - 5}px 1px` :
           />
-          <div className={styles.topright} />
+          <div className={styles.topright}>000</div>
         </div>
         <div className={styles.bottomboard}>
           <div className={styles.boardStyle}>

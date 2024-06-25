@@ -36,8 +36,12 @@
 
 .topleft {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 90px;
   height: 50px;
+  font-size: 50px;
+  color: red;
   background-color: black;
   border: inset 5px #eee;
 }
@@ -53,8 +57,12 @@
 
 .topright {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 90px;
   height: 50px;
+  font-size: 50px;
+  color: red;
   background-color: black;
   border: inset 5px #eee;
 }
@@ -82,4 +90,18 @@
   height: 35px;
   background-color: darkgray;
   border: outset 5px #eee;
+}
+.digital-number {
+  display: inline-block;
+  width: 30px; /* 数字の幅 */
+  height: 50px; /* 数字の高さ */
+  font-size: 30px; /* 数字のフォントサイズ */
+  font-family: 'Courier New', Courier, monospace; /* モノスペースフォントを使用 */
+  text-align: center; /* 文字を中央揃え */
+  line-height: 50px; /* 数字の高さと同じ */
+  background-color: black; /* 数字の背景色 */
+  color: lime; /* 数字の色 */
+  border: 2px solid lime; /* 数字の枠線 */
+  border-radius: 5px; /* 角丸 */
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* 影の追加 */
 }
