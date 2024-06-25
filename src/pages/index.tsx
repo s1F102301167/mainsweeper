@@ -84,7 +84,7 @@ const Home = () => {
   // 右クリック
   const clickR = (x: number, y: number) => {
     document.getElementsByTagName('html')[0].oncontextmenu = () => false;
-    if (userInputs[y][x] === 0) {
+    if (board[y][x] === -1 && userInputs[y][x] === 0) {
       newuserInputs[y][x] = 2;
       setUserInputs(newuserInputs);
     }
