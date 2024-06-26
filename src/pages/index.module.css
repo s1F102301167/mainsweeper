@@ -55,6 +55,15 @@
   border: outset 6px #eee;
 }
 
+/* .topcenterclick {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  background: url(../assets/images/icons.png) no-repeat;
+  background-size: 500px;
+  border: inset 6px #eee;
+} */
+
 .topright {
   display: flex;
   align-items: center;
@@ -91,17 +100,18 @@
   background-color: darkgray;
   border: outset 5px #eee;
 }
+
 .digital-number {
   display: inline-block;
   width: 30px; /* 数字の幅 */
   height: 50px; /* 数字の高さ */
-  font-size: 30px; /* 数字のフォントサイズ */
   font-family: 'Courier New', Courier, monospace; /* モノスペースフォントを使用 */
-  text-align: center; /* 文字を中央揃え */
+  font-size: 30px; /* 数字のフォントサイズ */
   line-height: 50px; /* 数字の高さと同じ */
-  background-color: black; /* 数字の背景色 */
   color: lime; /* 数字の色 */
+  text-align: center; /* 文字を中央揃え */
+  background-color: black; /* 数字の背景色 */
   border: 2px solid lime; /* 数字の枠線 */
   border-radius: 5px; /* 角丸 */
-  box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* 影の追加 */
+  box-shadow: 0 0 5px rgb(0 255 0 / 50%); /* 影の追加 */
 }

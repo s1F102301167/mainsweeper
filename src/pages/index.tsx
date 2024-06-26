@@ -42,11 +42,6 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ]);
 
-  const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
-  const isFailure = userInputs.some((row, y) =>
-    row.some((input, x) => input === 1 && bombMap[y][x] === 1),
-  );
-
   // -1 -> 石
   // 0 -> 画像無しセル
   // 1~8 -> 数字セル
@@ -149,6 +144,7 @@ const Home = () => {
   // 空白連鎖
   const opencell = (x: number, y: number) => {
     board[y][x] = bombcountboard[y][x];
+    userInputs[y][x] = 1;
     if (bombcountboard[y][x] === 0) {
       for (const direction of directions) {
         if (
@@ -172,6 +168,15 @@ const Home = () => {
       }
     }
   }
+
+  const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
+  const isFailure = userInputs.some((row, y) =>
+    row.some((input, x) => input === 1 && bombMap[y][x] === 1),
+  );
+  const totalCells = userInputs.length * userInputs[0].length;
+  const isClear =
+    userInputs.flat().filter((input) => input === 1).length === totalCells - bombConst;
+
   //にこにこクリック->すべてのボードが初期値に戻る
   const clicksmile = () => {
     setUserInputs((Inputs) => Inputs.map((row) => row.map(() => 0)));
@@ -231,7 +236,9 @@ const Home = () => {
             onClick={() => clicksmile()}
             style={{ backgroundPosition: `${-30 * 13 - 2}px 1px` }}
             // backgroundPositionの後ろにisEnd ? `${-30 * 15 - 10}px 1px` : isClear ? `${-30 * 14 - 5}px 1px` :
-          />
+          >
+            {/* クリックしたときにこの動作を入れる<div className={styles.topcenterclick} /> */}
+          </div>
           <div className={styles.topright}>000</div>
         </div>
         <div className={styles.bottomboard}>
