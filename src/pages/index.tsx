@@ -6,7 +6,7 @@ const Home = () => {
   // 1 -> 左クリック
   // 2 -> はてな(右クリック２回)
   // 3 -> 旗(右クリック１回)
-  const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>([
+  const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3 | 4)[][]>([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -108,9 +108,13 @@ const Home = () => {
         setBombMap(newbombMap);
       }
       if (userInputs[y][x] === 0) {
-        newuserInputs[y][x] = 1;
-        setUserInputs(newuserInputs);
+        if (bombMap[y][x] === 1) {
+          newuserInputs[y][x] = 4;
+        } else {
+          newuserInputs[y][x] = 1;
+        }
       }
+      setUserInputs(newuserInputs);
     }
   };
 
@@ -137,6 +141,9 @@ const Home = () => {
         }
         if (newuserInputs[a][b] === 3) {
           board[a][b] = 9;
+        }
+        if (newuserInputs[a][b] === 4) {
+          board[a][b] = 12;
         }
       }
     }
@@ -171,7 +178,7 @@ const Home = () => {
 
   const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
-    row.some((input, x) => input === 1 && bombMap[y][x] === 1),
+    row.some((input, x) => input === 1 || (input === 4 && bombMap[y][x] === 1)),
   );
 
   //にこにこクリック->すべてのボードが初期値に戻る
@@ -196,7 +203,7 @@ const Home = () => {
   const checkClear =
     userInputs.flat().filter((input) => input === 1).length ===
     userInputs.length * userInputs[0].length - bombConst;
-    
+
   // ボムの数引く旗の数(boardが10の数(旗))
   const FlagCount = board.flat().filter((number) => number === 10).length;
   const score = bombConst - FlagCount;
@@ -208,7 +215,7 @@ const Home = () => {
   // }
 
   console.table(bombMap);
-  console.table(newuserInputs);
+  console.table(userInputs);
   // console.table(bombcountboard);
   console.table(board);
 
@@ -243,6 +250,7 @@ const Home = () => {
                         : number === 9 || number === 10
                           ? undefined
                           : 'none',
+                    backgroundColor: number === 12 ? 'red' : 'none',
                   }}
                   key={`${x}-${y}`}
                   onClick={() => clickHandler(x, y)}
@@ -251,7 +259,9 @@ const Home = () => {
                   {number !== -1 && (
                     <div
                       className={styles.sampleStyle}
-                      style={{ backgroundPosition: `${-30 * (number - 1)}px 0px` }}
+                      style={{
+                        backgroundPosition: `${-30 * (number === 12 ? 10 : number - 1)}px 0px`,
+                      }}
                     />
                   )}
                 </div>
