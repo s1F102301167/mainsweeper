@@ -182,7 +182,7 @@ const Home = () => {
     for (let a = 0; a < 9; a++) {
       for (let b = 0; b < 9; b++) {
         if (bombMap[a][b] === 1) {
-          board[b][a] = 11;
+          board[a][b] = 11;
         }
       }
     }
