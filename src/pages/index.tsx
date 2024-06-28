@@ -187,11 +187,13 @@ const Home = () => {
       }
     }
   }
+// checkEndがtrueのとき以降マスをクリックしても何も動かないようにする、クリックした爆弾のマスだけ背景を赤にする
 
   // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
   const checkClear =
     userInputs.flat().filter((input) => input === 1).length ===
     userInputs.length * userInputs[0].length - bombConst;
+  // checkClearがtrueのときクリックしても何も動かないようにする
 
   // ボムの数引く旗の数(boardが10の数(旗))
   const FlagCount = board.flat().filter((number) => number === 10).length;
@@ -202,24 +204,6 @@ const Home = () => {
   // const timer = () => {
   //   isPlayingがTrueのときにスタート
   // }
-
-  // ↓メモ
-  // ユーザーインプットをクリック
-  // 0 -> 未クリック
-  // 1 -> 左クリック
-  // 2 -> はてな
-  // 3 -> 旗
-  // if (board[y][x] === -1) {
-  // for (const direction of directions) {
-  // }
-  // }
-  // for (let y = 0; y < 9; y++) {
-  //   for (let x = 0; x < 9; x++) {}
-  // }
-  // 上記を用いて８方向探索し、爆弾の数をそのマスに記載する
-  // なかった場合：-1
-  // １つの場合：samplePos
-  // １つ以上の場合：samplePos + n
 
   console.table(bombMap);
   console.table(newuserInputs);
