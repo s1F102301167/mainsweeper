@@ -109,10 +109,6 @@ const Home = () => {
       setUserInputs(newuserInputs);
     }
   };
-  // topboardに動きをつける
-  // const clicktopboard = (z: number) => {
-  //   if (board[z])
-  // }
 
   // ボードに表示させるコード
   for (let a = 0; a < 9; a++) {
@@ -173,9 +169,6 @@ const Home = () => {
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => input === 1 && bombMap[y][x] === 1),
   );
-  const totalCells = userInputs.length * userInputs[0].length;
-  const isClear =
-    userInputs.flat().filter((input) => input === 1).length === totalCells - bombConst;
 
   //にこにこクリック->すべてのボードが初期値に戻る
   const clicksmile = () => {
@@ -184,14 +177,21 @@ const Home = () => {
   };
 
   // 爆弾クリック->マスをクリックしても何も動かない&topcenterをばってんニコちゃん
-  // const isEnd = (x: number, y: number) => {
-  //   if
-  // }
+  const checkEnd = isFailure;
+  if (isFailure) {
+    for (let a = 0; a < 9; a++) {
+      for (let b = 0; b < 9; b++) {
+        if (bombMap[a][b] === 1) {
+          board[b][a] = 11;
+        }
+      }
+    }
+  }
 
   // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
-  // const isClear = (x: number, y: number) => {
-  //   if
-  // };
+  const checkClear =
+    userInputs.flat().filter((input) => input === 1).length ===
+    userInputs.length * userInputs[0].length - bombConst;
 
   // ボムの数引く旗の数(boardが10の数(旗))
   const FlagCount = board.flat().filter((number) => number === 10).length;
@@ -234,11 +234,14 @@ const Home = () => {
           <div
             className={styles.topcenter}
             onClick={() => clicksmile()}
-            style={{ backgroundPosition: `${-30 * 13 - 2}px 1px` }}
-            // backgroundPositionの後ろにisEnd ? `${-30 * 15 - 10}px 1px` : isClear ? `${-30 * 14 - 5}px 1px` :
-          >
-            {/* クリックしたときにこの動作を入れる<div className={styles.topcenterclick} /> */}
-          </div>
+            style={{
+              backgroundPosition: checkEnd
+                ? `${-30 * 15 - 12}px 1px`
+                : checkClear
+                  ? `${-30 * 14 - 5}px 1px`
+                  : `${-30 * 13 - 2}px 1px`,
+            }}
+          />
           <div className={styles.topright}>000</div>
         </div>
         <div className={styles.bottomboard}>
