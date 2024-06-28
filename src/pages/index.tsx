@@ -118,65 +118,7 @@ const Home = () => {
     }
   };
 
-  // ボードに表示させるコード
-  for (let a = 0; a < 9; a++) {
-    for (let b = 0; b < 9; b++) {
-      for (const direction of directions) {
-        if (
-          a + direction[0] < 0 ||
-          a + direction[0] >= 9 ||
-          b + direction[1] < 0 ||
-          b + direction[1] >= 9
-        ) {
-          continue;
-        }
-        if (bombMap[a][b] === 1) {
-          bombcountboard[a][b] = 11;
-          if (bombMap[a + direction[0]][b + direction[1]] !== 1) {
-            bombcountboard[a + direction[0]][b + direction[1]] += 1;
-          }
-        }
-        if (newuserInputs[a][b] === 2) {
-          board[a][b] = 10;
-        }
-        if (newuserInputs[a][b] === 3) {
-          board[a][b] = 9;
-        }
-        if (newuserInputs[a][b] === 4) {
-          board[a][b] = 12;
-        }
-      }
-    }
-  }
-  // 空白連鎖
-  const opencell = (x: number, y: number) => {
-    board[y][x] = bombcountboard[y][x];
-    userInputs[y][x] = 1;
-    if (bombcountboard[y][x] === 0) {
-      for (const direction of directions) {
-        if (
-          y + direction[0] < 0 ||
-          y + direction[0] >= 9 ||
-          x + direction[1] < 0 ||
-          x + direction[1] >= 9
-        ) {
-          continue;
-        }
-        if (board[y + direction[0]][x + direction[1]] === -1) {
-          opencell(x + direction[1], y + direction[0]);
-        }
-      }
-    }
-  };
-  for (let a = 0; a < 9; a++) {
-    for (let b = 0; b < 9; b++) {
-      if (newuserInputs[a][b] === 1) {
-        opencell(b, a);
-      }
-    }
-  }
-
-  const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
+  // const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
   );
@@ -219,8 +161,65 @@ const Home = () => {
 
   console.table(bombMap);
   console.table(userInputs);
-  // console.table(bombcountboard);
   console.table(board);
+  // 空白連鎖
+  const opencell = (x: number, y: number) => {
+    board[y][x] = bombcountboard[y][x];
+    userInputs[y][x] = 1;
+    if (bombcountboard[y][x] === 0) {
+      for (const direction of directions) {
+        if (
+          y + direction[0] < 0 ||
+          y + direction[0] >= 9 ||
+          x + direction[1] < 0 ||
+          x + direction[1] >= 9
+        ) {
+          continue;
+        }
+        if (board[y + direction[0]][x + direction[1]] === -1) {
+          opencell(x + direction[1], y + direction[0]);
+        }
+      }
+    }
+  };
+  for (let a = 0; a < 9; a++) {
+    for (let b = 0; b < 9; b++) {
+      if (newuserInputs[a][b] === 1) {
+        opencell(b, a);
+      }
+    }
+  }
+
+  // ボードに表示させるコード
+  for (let a = 0; a < 9; a++) {
+    for (let b = 0; b < 9; b++) {
+      for (const direction of directions) {
+        if (
+          a + direction[0] < 0 ||
+          a + direction[0] >= 9 ||
+          b + direction[1] < 0 ||
+          b + direction[1] >= 9
+        ) {
+          continue;
+        }
+        if (bombMap[a][b] === 1) {
+          bombcountboard[a][b] = 11;
+          if (bombMap[a + direction[0]][b + direction[1]] !== 1) {
+            bombcountboard[a + direction[0]][b + direction[1]] += 1;
+          }
+        }
+        if (newuserInputs[a][b] === 2) {
+          board[a][b] = 10;
+        }
+        if (newuserInputs[a][b] === 3) {
+          board[a][b] = 9;
+        }
+        if (newuserInputs[a][b] === 4) {
+          board[a][b] = 12;
+        }
+      }
+    }
+  }
 
   return (
     <div className={styles.container}>
