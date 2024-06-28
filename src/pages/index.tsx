@@ -79,34 +79,38 @@ const Home = () => {
   // 右クリック
   const clickR = (x: number, y: number) => {
     document.getElementsByTagName('html')[0].oncontextmenu = () => false;
-    if (board[y][x] === -1 && userInputs[y][x] === 0) {
-      newuserInputs[y][x] = 2;
-      setUserInputs(newuserInputs);
-    }
-    if (userInputs[y][x] === 2) {
-      newuserInputs[y][x] = 3;
-      setUserInputs(newuserInputs);
-    }
-    if (userInputs[y][x] === 3) {
-      newuserInputs[y][x] = 0;
-      setUserInputs(newuserInputs);
+    if (!isFailure && !checkClear) {
+      if (board[y][x] === -1 && userInputs[y][x] === 0) {
+        newuserInputs[y][x] = 2;
+        setUserInputs(newuserInputs);
+      }
+      if (userInputs[y][x] === 2) {
+        newuserInputs[y][x] = 3;
+        setUserInputs(newuserInputs);
+      }
+      if (userInputs[y][x] === 3) {
+        newuserInputs[y][x] = 0;
+        setUserInputs(newuserInputs);
+      }
     }
   };
   const clickHandler = (x: number, y: number) => {
-    if (bombcountboard[y][x] === 0 && userInputs[y][x] === 0) {
-      while (newbombMap.flat().filter((number) => number === 1).length < 10) {
-        const Y = Math.floor(Math.random() * 9);
-        const X = Math.floor(Math.random() * 9);
-        if (Y === y && X === x) {
-          return;
+    if (!isFailure && !checkClear) {
+      if (bombcountboard[y][x] === 0 && userInputs[y][x] === 0) {
+        while (newbombMap.flat().filter((number) => number === 1).length < 10) {
+          const Y = Math.floor(Math.random() * 9);
+          const X = Math.floor(Math.random() * 9);
+          if (Y === y && X === x) {
+            return;
+          }
+          newbombMap[Y][X] = 1;
         }
-        newbombMap[Y][X] = 1;
+        setBombMap(newbombMap);
       }
-      setBombMap(newbombMap);
-    }
-    if (userInputs[y][x] === 0) {
-      newuserInputs[y][x] = 1;
-      setUserInputs(newuserInputs);
+      if (userInputs[y][x] === 0) {
+        newuserInputs[y][x] = 1;
+        setUserInputs(newuserInputs);
+      }
     }
   };
 
@@ -129,10 +133,10 @@ const Home = () => {
           }
         }
         if (newuserInputs[a][b] === 2) {
-          board[a][b] = 9;
+          board[a][b] = 10;
         }
         if (newuserInputs[a][b] === 3) {
-          board[a][b] = 10;
+          board[a][b] = 9;
         }
       }
     }
@@ -187,14 +191,12 @@ const Home = () => {
       }
     }
   }
-// checkEndがtrueのとき以降マスをクリックしても何も動かないようにする、クリックした爆弾のマスだけ背景を赤にする
 
   // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
   const checkClear =
     userInputs.flat().filter((input) => input === 1).length ===
     userInputs.length * userInputs[0].length - bombConst;
-  // checkClearがtrueのときクリックしても何も動かないようにする
-
+    
   // ボムの数引く旗の数(boardが10の数(旗))
   const FlagCount = board.flat().filter((number) => number === 10).length;
   const score = bombConst - FlagCount;
