@@ -178,7 +178,7 @@ const Home = () => {
 
   const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
-    row.some((input, x) => input === 1 || (input === 4 && bombMap[y][x] === 1)),
+    row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
   );
 
   //にこにこクリック->すべてのボードが初期値に戻る
@@ -194,6 +194,9 @@ const Home = () => {
       for (let b = 0; b < 9; b++) {
         if (bombMap[a][b] === 1) {
           board[a][b] = 11;
+        }
+        if (newuserInputs[a][b] === 4) {
+          board[a][b] = 12;
         }
       }
     }
