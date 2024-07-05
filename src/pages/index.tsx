@@ -254,7 +254,12 @@ const Home = () => {
                         : number === 9 || number === 10
                           ? undefined
                           : 'none',
-                    backgroundColor: number === 12 ? 'red' : 'none',
+                    backgroundColor:
+                      number === 12
+                        ? 'red'
+                        : number === -1 || number === 9 || number === 10
+                          ? 'darkgray'
+                          : 'gray',
                   }}
                   key={`${x}-${y}`}
                   onClick={() => clickHandler(x, y)}
