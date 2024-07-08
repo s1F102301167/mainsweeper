@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './index.module.css';
 
 const Home = () => {
@@ -73,6 +73,8 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ];
 
+  const [count, setCount] = useState(0);
+  const [counting, setCounting] = useState(false);
   // console.log(board);
   const newuserInputs = structuredClone(userInputs);
   const newbombMap = structuredClone(bombMap);
@@ -80,6 +82,7 @@ const Home = () => {
   const clickR = (x: number, y: number) => {
     document.getElementsByTagName('html')[0].oncontextmenu = () => false;
     if (!isFailure && !checkClear) {
+      if (!counting) setCounting(true);
       if (board[y][x] === -1 && userInputs[y][x] === 0) {
         newuserInputs[y][x] = 2;
         setUserInputs(newuserInputs);
@@ -106,6 +109,7 @@ const Home = () => {
           newbombMap[Y][X] = 1;
         }
         setBombMap(newbombMap);
+        if (!counting) setCounting(true);
       }
       if (userInputs[y][x] === 0) {
         if (bombMap[y][x] === 1) {
@@ -187,6 +191,8 @@ const Home = () => {
   const clicksmile = () => {
     setUserInputs((Inputs) => Inputs.map((row) => row.map(() => 0)));
     setBombMap((Bomb) => Bomb.map((row) => row.map(() => 0)));
+    setCount(0);
+    setCounting(false);
   };
 
   // 爆弾クリック->マスをクリックしても何も動かない&topcenterをばってんニコちゃん
@@ -202,6 +208,7 @@ const Home = () => {
         }
       }
     }
+    setCounting(false);
   }
 
   // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
@@ -214,10 +221,20 @@ const Home = () => {
   const score = bombConst - FlagCount;
   const flagbombscore = score.toString().padStart(3, '0');
 
-  // // boardrightにタイマーbombmapに0以外がセットされたときにスタートし、isEndがTrueのときに止まる
-  // const timer = () => {
-  //   isPlayingがTrueのときにスタート
-  // }
+  // タイマーbombmapに0以外がセットされたときにスタートし、isEndがTrueのときに止まる
+  useEffect(() => {
+    if (!counting) return;
+
+    const countUp = () => {
+      setCount((count) => count + 1);
+    };
+
+    const intervalId = setInterval(countUp, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [counting]);
+  
+  const mainsweepercount = count.toString().padStart(3, '0');
 
   console.table(bombMap);
   console.table(userInputs);
@@ -239,7 +256,7 @@ const Home = () => {
                   : `${-30 * 13 - 2}px 1px`,
             }}
           />
-          <div className={styles.topright}>000</div>
+          <div className={styles.topright}>{mainsweepercount}</div>
         </div>
         <div className={styles.bottomboard}>
           <div className={styles.boardStyle}>
