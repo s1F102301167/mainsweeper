@@ -208,7 +208,7 @@ const Home = () => {
         }
       }
     }
-    setCounting(false);
+    // setCounting(false);
   }
 
   // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
@@ -221,7 +221,7 @@ const Home = () => {
   const score = bombConst - FlagCount;
   const flagbombscore = score.toString().padStart(3, '0');
 
-  // タイマーbombmapに0以外がセットされたときにスタートし、isEndがTrueのときに止まる
+  // タイマー
   useEffect(() => {
     if (!counting) return;
 
@@ -233,7 +233,7 @@ const Home = () => {
 
     return () => clearInterval(intervalId);
   }, [counting]);
-  
+
   const mainsweepercount = count.toString().padStart(3, '0');
 
   console.table(bombMap);
