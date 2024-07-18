@@ -74,7 +74,6 @@ const Home = () => {
   ];
 
   const [count, setCount] = useState(0);
-  const [counting, setCounting] = useState(false);
   // console.log(board);
   const newuserInputs = structuredClone(userInputs);
   const newbombMap = structuredClone(bombMap);
@@ -82,7 +81,6 @@ const Home = () => {
   const clickR = (x: number, y: number) => {
     document.getElementsByTagName('html')[0].oncontextmenu = () => false;
     if (!isFailure && !checkClear) {
-      if (!counting) setCounting(true);
       if (board[y][x] === -1 && userInputs[y][x] === 0) {
         newuserInputs[y][x] = 2;
         setUserInputs(newuserInputs);
@@ -109,7 +107,6 @@ const Home = () => {
           newbombMap[Y][X] = 1;
         }
         setBombMap(newbombMap);
-        if (!counting) setCounting(true);
       }
       if (userInputs[y][x] === 0) {
         if (bombMap[y][x] === 1) {
@@ -182,7 +179,7 @@ const Home = () => {
     }
   }
 
-  // const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
+  const isPlaying = userInputs.some((row) => row.some((input) => input !== 0));
   const isFailure = userInputs.some((row, y) =>
     row.some((input, x) => (input === 1 || input === 4) && bombMap[y][x] === 1),
   );
@@ -192,7 +189,6 @@ const Home = () => {
     setUserInputs((Inputs) => Inputs.map((row) => row.map(() => 0)));
     setBombMap((Bomb) => Bomb.map((row) => row.map(() => 0)));
     setCount(0);
-    setCounting(false);
   };
 
   // 爆弾クリック->マスをクリックしても何も動かない&topcenterをばってんニコちゃん
@@ -208,7 +204,6 @@ const Home = () => {
         }
       }
     }
-    // setCounting(false);
   }
 
   // // クリア条件(爆弾以外を全てクリック)->マスをクリックしても何も動かない&タイマーストップ&きらきらにこちゃん
@@ -221,18 +216,17 @@ const Home = () => {
   const score = bombConst - FlagCount;
   const flagbombscore = score.toString().padStart(3, '0');
 
-  // タイマー
+  // タイマー(クリア時と爆弾クリック時のタイマーが止められていない状態)
   useEffect(() => {
-    if (!counting) return;
-
     const countUp = () => {
+      if (isFailure || checkClear || !isPlaying) return;
       setCount((count) => count + 1);
     };
 
     const intervalId = setInterval(countUp, 1000);
 
     return () => clearInterval(intervalId);
-  }, [counting]);
+  }, [isFailure, checkClear, isPlaying]);
 
   const mainsweepercount = count.toString().padStart(3, '0');
 
@@ -250,9 +244,9 @@ const Home = () => {
             onClick={() => clicksmile()}
             style={{
               backgroundPosition: checkEnd
-                ? `${-30 * 15 - 12}px 1px`
+                ? `${-30 * 15 - 12}px 2px`
                 : checkClear
-                  ? `${-30 * 14 - 5}px 1px`
+                  ? `${-30 * 14 - 5}px 2px`
                   : `${-30 * 13 - 2}px 1px`,
             }}
           />
